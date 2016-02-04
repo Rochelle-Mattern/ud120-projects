@@ -4,8 +4,13 @@ import matplotlib.pyplot as plt
 from prep_terrain_data import makeTerrainData
 from class_vis import prettyPicture
 
+
+
 features_train, labels_train, features_test, labels_test = makeTerrainData()
 
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.metrics import accuracy_score
 
 ### the training data (features_train, labels_train) have both "fast" and "slow"
 ### points mixed together--separate them so we can give them different colors
@@ -30,15 +35,25 @@ plt.show()
 
 ### your code here!  name your classifier object clf if you want the 
 ### visualization code (prettyPicture) to show you the decision boundary
+###clf = RandomForestClassifier(n_estimators=20)
+
+clf = AdaBoostClassifier(n_estimators = 20, learning_rate = 2, )
+
+clf.fit(features_train, labels_train)
+
+pred = clf.predict(features_test)
+
+acc = accuracy_score(pred, labels_test)
+
+
+print acc
 
 
 
 
 
+prettyPicture(clf, features_test, labels_test)
+plt.show()
 
-
-
-try:
-    prettyPicture(clf, features_test, labels_test)
-except NameError:
-    pass
+###except NameError:
+###pass
